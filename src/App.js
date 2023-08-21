@@ -5,6 +5,7 @@ import TodoForm from "./components/TodoForm";
 import PostList from "./components/PostList";
 import Pagination from "./components/Pagination";
 import queryString from "query-string";
+import PostFiltersFrom from "./components/PostFiltersFrom";
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -23,6 +24,7 @@ function App() {
   const [filters, setFilters] = useState({
     _page: 1,
     _limit: 10,
+    title_like: "",
   });
 
   useEffect(() => {
@@ -69,13 +71,21 @@ function App() {
     newTodoList.push(newTodo);
     setTodoList(newTodoList);
   }
+
+  function handleFiltersChange(newFilters) {
+    setFilters({
+      ...filters,
+      _page: 1,
+      title_like: newFilters.searchTerm,
+    });
+  }
   return (
     <div className="app">
       <h1>Hello Sown</h1>
       {/* <ColorBox /> */}
       {/* <TodoList todos={todoList} onToDoClick={handleTodoClick} />
       <TodoForm onSubmit={handleTodoFormSubmit} /> */}
-
+      <PostFiltersFrom onSubmit={handleFiltersChange} />
       <PostList posts={posts} />
       <Pagination pagination={pagination} onPageChange={handlePageChange} />
     </div>
